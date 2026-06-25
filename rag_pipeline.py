@@ -1,5 +1,5 @@
-import os
 from dotenv import load_dotenv       
+import os
 
 from langchain_community.document_loaders import TextLoader             
 from langchain_text_splitters import RecursiveCharacterTextSplitter    
@@ -9,17 +9,9 @@ from langchain_groq import ChatGroq
 from langchain.chains import RetrievalQA                               
 from langchain.prompts import PromptTemplate                           
 
-# Try Streamlit Cloud secrets first, then .env file
-try:
-    if "GROQ_API_KEY" not in os.environ:
-        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
-except:
-    # Fallback to .env file (local development)
-    from dotenv import load_dotenv
-    load_dotenv()
+load_dotenv()
 
 # ── Configuration ──────────────────────────────────────────────────────
-
 # Location of motorcycle rental catalog file
 DATA_PATH = "data/Documents_Sales.txt"
 
