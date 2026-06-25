@@ -1,15 +1,6 @@
 import streamlit as st
 from rag_pipeline import build_rag_pipeline
 
-# Try Streamlit Cloud secrets first, then .env file
-try:
-    if "GROQ_API_KEY" not in os.environ:
-        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
-except:
-    # Fallback to .env file (local development)
-    from dotenv import load_dotenv
-    load_dotenv()
-    
 # ── Page Configuration ─────────────────────────────────────────────────
 st.set_page_config(
     page_title="RideEasy Customer Support",
