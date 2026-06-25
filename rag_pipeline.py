@@ -1,72 +1,58 @@
-# ============================================================
-# RAG PIPELINE — Smartphone Advisor
-# ============================================================
-#
-# Modul ini membangun seluruh pipeline RAG menggunakan LangChain:
-#
-# ALUR KERJA RAG:
-#   1. LOAD     → Baca file katalog produk
-#   2. CHUNK    → Potong dokumen jadi bagian-bagian kecil
-#   3. EMBED    → Ubah setiap potongan jadi vektor angka
-#   4. STORE    → Simpan vektor ke FAISS untuk pencarian cepat
-#   5. RETRIEVE → Saat ada pertanyaan, ambil potongan paling relevan
-#   6. GENERATE → LLM merangkai jawaban dari potongan yang diambil
-#
-# ============================================================
-
 import os
-from dotenv import load_dotenv          # Untuk membaca file .env
+from dotenv import load_dotenv       
 
-from langchain_community.document_loaders import TextLoader             # Untuk mengubah knowledge document jadi format yang bisa diproses LangChain
-from langchain_text_splitters import RecursiveCharacterTextSplitter     # Untuk chunking
-from langchain_huggingface import HuggingFaceEmbeddings                 # Untuk embedding
-from langchain_community.vectorstores import FAISS                      # Vector database
-from langchain_groq import ChatGroq                                     # Connect ke Groq API
-from langchain.chains import RetrievalQA                                # Orkestrator
-from langchain.prompts import PromptTemplate                            # Untuk membaca dan memformat file system_prompt.txt
+from langchain_community.document_loaders import TextLoader             
+from langchain_text_splitters import RecursiveCharacterTextSplitter    
+from langchain_huggingface import HuggingFaceEmbeddings                
+from langchain_community.vectorstores import FAISS                      
+from langchain_groq import ChatGroq               
+from langchain.chains import RetrievalQA                               
+from langchain.prompts import PromptTemplate                           
 
 load_dotenv()
 
-# ── Konfigurasi ────────────────────────────────────────────────────────
+# ── Configuration ──────────────────────────────────────────────────────
 
-# Lokasi file katalog produk
-DATA_PATH = "data/katalog_smartphone.txt"
+# Location of motorcycle rental catalog file
+DATA_PATH = "data/Documents_Sales.txt"
 
-# Lokasi file system prompt
+# Location of system prompt file
 SYSTEM_PROMPT_PATH = "system_prompt.txt"
 
-# Model embedding: mengubah teks jadi vektor angka
-# Menggunakan model multilingual agar paham Bahasa Indonesia
+# Embedding model: converts text into numerical vectors
 EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
-# Model LLM yang akan menjawab pertanyaan
+# LLM model that will answer questions (Google Gemini)
 LLM_MODEL = "llama-3.3-70b-versatile"
 
-# Ukuran setiap potongan teks (dalam karakter)
+# Temperature: controls randomness of LLM output
+LLM_TEMPERATURE = 0.001
+
+# Size of each text chunk (in characters)
 CHUNK_SIZE = 800
 
-# Tumpang tindih antar potongan agar konteks tidak terputus
+# Overlap between chunks so context is not cut off
 CHUNK_OVERLAP = 100
 
-# Berapa potongan yang diambil untuk setiap pertanyaan
+# How many chunks to retrieve for each question
 TOP_K_RESULTS = 4
 
 
-# ── Load System Prompt dari File ───────────────────────────────────────
+# ── Load System Prompt from File ───────────────────────────────────────
 
 def load_system_prompt(path: str) -> str:
     """
-    Membaca file system_prompt.txt dan mengembalikannya sebagai string.
+    Reads the system_prompt.txt file and returns it as a string.
 
-    System prompt disimpan di file terpisah agar:
-    - Mudah dimodifikasi tanpa menyentuh kode Python
-    - Lebih aman: instruksi sistem terpisah dari logika program
-    - Lebih bersih: kode Python fokus pada logika, bukan teks panjang
+    System prompt is stored in a separate file so that:
+    - Easy to modify without touching Python code
+    - Safer: system instructions separate from program logic
+    - Cleaner: Python code focuses on logic, not long text
 
-    File menggunakan XML-style delimiter untuk:
-    - Kejelasan struktur (tiap bagian punya tag pembuka dan penutup)
-    - Keamanan: LLM dilatih menghormati XML tags sebagai batas struktural
-    - Keterbacaan: siapapun yang buka file langsung paham bagian mana itu apa
+    The file uses XML-style delimiters for:
+    - Structural clarity (each section has opening and closing tags)
+    - Security: LLMs are trained to respect XML tags as structural boundaries
+    - Readability: anyone opening the file immediately understands which part is what
     """
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
@@ -75,35 +61,27 @@ def load_system_prompt(path: str) -> str:
 SYSTEM_PROMPT_TEMPLATE = load_system_prompt(SYSTEM_PROMPT_PATH)
 
 
-# ── Fungsi Build Pipeline ──────────────────────────────────────────────
+# ── Build Pipeline Function ────────────────────────────────────────────
 
 def build_rag_pipeline():
     """
-    Membangun RAG pipeline lengkap dari nol.
+    Builds a complete RAG pipeline from scratch.
 
-    Mengembalikan:
-    - chain: objek RetrievalQA yang siap menerima pertanyaan
-    - num_chunks: jumlah potongan teks yang berhasil diindeks
+    Returns:
+    - chain: RetrievalQA object ready to accept questions
+    - num_chunks: number of text chunks successfully indexed
     """
 
     # ------------------------------------------------------------------
-    # LANGKAH 1: LOAD — Membaca file katalog produk
+    # STEP 1: LOAD — Read the motorcycle rental catalog file
     # ------------------------------------------------------------------
-    # TextLoader membaca file teks biasa dan mengubahnya jadi objek
-    # Document yang bisa diproses LangChain.
+    # TextLoader reads a plain text file and converts it into Document
     loader = TextLoader(DATA_PATH, encoding="utf-8")
     documents = loader.load()
 
     # ------------------------------------------------------------------
-    # LANGKAH 2: CHUNK — Memotong dokumen jadi bagian-bagian kecil
+    # STEP 2: CHUNK — Split the document into smaller pieces
     # ------------------------------------------------------------------
-    # Kenapa perlu di-chunk?
-    # LLM punya batas panjang teks yang bisa diproses sekaligus.
-    # Dengan memotong, kita bisa memilih HANYA bagian yang relevan
-    # untuk dikirim ke LLM — lebih efisien dan akurat.
-    #
-    # separators: urutan prioritas pemisah saat memotong
-    # "\n---\n" = garis pemisah antar produk di katalog kita
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
@@ -112,14 +90,8 @@ def build_rag_pipeline():
     chunks = splitter.split_documents(documents)
 
     # ------------------------------------------------------------------
-    # LANGKAH 3: EMBED — Mengubah teks jadi vektor angka
+    # STEP 3: EMBED — Convert text into numerical vectors
     # ------------------------------------------------------------------
-    # Embedding adalah proses mengubah teks jadi deretan angka (vektor)
-    # yang merepresentasikan "makna" teks tersebut.
-    # Teks dengan makna serupa akan menghasilkan vektor yang berdekatan.
-    #
-    # Catatan: Model akan diunduh otomatis pertama kali (~400MB).
-    # Setelah itu tersimpan di cache lokal.
     embeddings = HuggingFaceEmbeddings(
         model_name=EMBEDDING_MODEL,
         model_kwargs={"device": "cpu"},
@@ -127,38 +99,29 @@ def build_rag_pipeline():
     )
 
     # ------------------------------------------------------------------
-    # LANGKAH 4: STORE — Menyimpan vektor ke FAISS
+    # STEP 4: STORE — Save vectors to FAISS
     # ------------------------------------------------------------------
-    # FAISS (Facebook AI Similarity Search) adalah database vektor
-    # yang sangat cepat untuk mencari kemiripan antar teks.
-    # Semua chunk + vektornya disimpan di sini di memory lokal.
     vectorstore = FAISS.from_documents(chunks, embeddings)
 
     # ------------------------------------------------------------------
-    # LANGKAH 5: RETRIEVER — Menyiapkan mekanisme pencarian
+    # STEP 5: RETRIEVER — Set up the search mechanism
     # ------------------------------------------------------------------
-    # Retriever adalah komponen yang menerima pertanyaan pengguna,
-    # mengubahnya jadi vektor, lalu mencari chunk paling mirip
-    # di dalam FAISS vectorstore.
     retriever = vectorstore.as_retriever(
         search_type="similarity",
         search_kwargs={"k": TOP_K_RESULTS}
     )
 
     # ------------------------------------------------------------------
-    # LANGKAH 6: LLM — Inisialisasi model bahasa via Groq
+    # STEP 6: LLM — Initialize Google Gemini via API
     # ------------------------------------------------------------------
-    # Groq adalah platform yang menyediakan akses ke LLM dengan
-    # kecepatan inferensi sangat tinggi.
-    # Temperature 0.3 = jawaban relatif konsisten dan faktual
     llm = ChatGroq(
         model=LLM_MODEL,
-        temperature=0.3,
+        temperature=LLM_TEMPERATURE,
         api_key=os.getenv("GROQ_API_KEY")
     )
 
     # ------------------------------------------------------------------
-    # LANGKAH 7: PROMPT — Template instruksi untuk LLM
+    # STEP 7: PROMPT — Instruction template for the LLM
     # ------------------------------------------------------------------
     prompt = PromptTemplate(
         template=SYSTEM_PROMPT_TEMPLATE,
@@ -166,13 +129,8 @@ def build_rag_pipeline():
     )
 
     # ------------------------------------------------------------------
-    # LANGKAH 8: CHAIN — Menggabungkan semua komponen
+    # STEP 8: CHAIN — Combine all components
     # ------------------------------------------------------------------
-    # RetrievalQA menggabungkan Retriever + LLM + Prompt menjadi
-    # satu pipeline yang bisa langsung menerima pertanyaan.
-    #
-    # chain_type="stuff" = semua chunk yang diambil langsung
-    # dimasukkan ke dalam satu prompt (cocok untuk chunk sedikit)
     chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",

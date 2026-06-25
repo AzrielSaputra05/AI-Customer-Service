@@ -1,10 +1,33 @@
-langchain==0.2.16
-langchain-community==0.2.16
-langchain-core==0.2.38
-langchain-text-splitters==0.2.4
-langchain-groq==0.1.9
-langchain-huggingface==0.0.3
-sentence-transformers==3.0.1
-faiss-cpu==1.8.0
-streamlit==1.38.0
-python-dotenv==1.0.1
+# langchain==0.2.16
+# langchain-community==0.2.16
+# langchain-core==0.2.38
+# langchain-text-splitters==0.2.4
+# langchain-groq==0.1.9
+# langchain-huggingface==0.0.3
+# sentence-transformers==3.0.1
+# faiss-cpu==1.8.0
+# streamlit==1.38.0
+# python-dotenv==1.0.1
+
+
+langchain>=0.2.0,<0.3.0
+langchain-community>=0.2.0,<0.3.0
+langchain-core>=0.2.0,<0.3.0
+langchain-text-splitters>=0.2.0,<0.3.0
+langchain-groq>=0.1.0,<0.2.0
+langchain-huggingface>=0.0.3,<0.1.0
+sentence-transformers>=2.7.0,<4.0.0
+faiss-cpu>=1.7.0,<2.0.0
+streamlit>=1.35.0,<2.0.0
+python-dotenv>=1.0.0
+numpy
+# langchain_google_genai
+
+
+# pip install -U langchain-community
+# pip install langchain-huggingface sentence-transformers transformers
+# pip install groq langchain-groq
+# pip install langchain langchain-community langchain-huggingface langchain-groq sentence-transformers faiss-cpu pypdf python-dotenv streamlit
+
+
+# atau pip install environment

@@ -1,133 +1,127 @@
-# ============================================================
-# SMARTPHONE ADVISOR
-# Chatbot Perbandingan Produk untuk Tim Sales & Marketing
-# Powered by LangChain + Groq + FAISS
-# ============================================================
-#
-# CARA MENJALANKAN:
-#   streamlit run app.py
-#
-# ============================================================
-
 import streamlit as st
 from rag_pipeline import build_rag_pipeline
 
-# ── Konfigurasi Halaman ────────────────────────────────────────────────
+# ── Page Configuration ─────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Smartphone Advisor",
-    page_icon="📱",
+    page_title="RideEasy Customer Support",
+    page_icon="🏍️",
     layout="centered"
 )
 
 # ── Header ─────────────────────────────────────────────────────────────
-st.title("📱 Smartphone Advisor")
+st.title("🏍️ RideEasy Customer Support")
 st.caption(
-    "Asisten AI untuk tim sales & marketing — "
-    "rekomendasi dan perbandingan produk smartphone berdasarkan katalog resmi"
+    "AI Assistant for sales & marketing team — "
+    "pricing info, rental requirements, motorcycle recommendations, and services"
 )
 
 # ── Load RAG Pipeline ──────────────────────────────────────────────────
-# Menggunakan st.cache_resource agar pipeline hanya dibangun sekali.
-# Tanpa ini, pipeline akan dibangun ulang setiap ada interaksi pengguna.
 @st.cache_resource(show_spinner=False)
 def load_pipeline():
     return build_rag_pipeline()
 
-# Tampilkan proses loading kepada pengguna
 if "pipeline_loaded" not in st.session_state:
-    with st.status("Memuat sistem AI...", expanded=True) as status:
-        st.write("Membaca katalog produk...")
-        st.write("Membangun vector store...")
-        st.write("Menginisialisasi model bahasa...")
+    with st.status("Loading AI system...", expanded=True) as status:
+        st.write("Reading motorcycle rental catalog...")
+        st.write("Building vector store...")
+        st.write("Initializing language model...")
         chain, num_chunks = load_pipeline()
         st.session_state.chain = chain
         st.session_state.num_chunks = num_chunks
         st.session_state.pipeline_loaded = True
         status.update(
-            label=f"Sistem siap! {num_chunks} potongan dokumen berhasil diindeks.",
+            label=f"System ready! {num_chunks} document chunks indexed.",
             state="complete"
         )
 
 chain = st.session_state.chain
 
-# ── Inisialisasi Riwayat Chat ──────────────────────────────────────────
+# ── Initialize Chat History ────────────────────────────────────────────
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# ── Tampilkan Contoh Pertanyaan (hanya saat belum ada chat) ───────────
+# ── Display Example Questions ──────────────────────────────────────────
 if not st.session_state.messages:
     st.info(
-        "**Contoh pertanyaan yang bisa Anda ajukan:**\n\n"
-        "- Rekomendasikan smartphone untuk fotografi dengan budget 5 juta\n"
-        "- Bandingkan Samsung Galaxy S24 dengan iPhone 15\n"
-        "- HP mana yang cocok untuk konten kreator video?\n"
-        "- Smartphone mana yang pengisian baterainya paling cepat?\n"
-        "- Produk apa yang paling cocok untuk pengguna aktif outdoor?\n"
-        "- Apa perbedaan iPhone 15 dan iPhone 15 Pro Max?"
+        "**Example questions you can ask:**\n\n"
+        "- How much is Honda Beat rental per day?\n"
+        "- What are the requirements for renting a motorcycle?\n"
+        "- Recommend a comfortable motorcycle for touring\n"
+        "- Compare NMAX and PCX for long distance travel\n"
+        "- What is the penalty for late return?\n"
+        "- Do you provide airport pick-up and delivery?\n"
+        "- Which motorcycle is the most fuel efficient?\n"
+        "- Is there a discount for monthly rental?"
     )
 
-# ── Tampilkan Riwayat Chat ─────────────────────────────────────────────
+# ── Display Chat History ───────────────────────────────────────────────
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# ── Input Pengguna ─────────────────────────────────────────────────────
-if user_input := st.chat_input("Tanyakan sesuatu tentang produk smartphone..."):
+# ── User Input ─────────────────────────────────────────────────────────
+if user_input := st.chat_input("Ask anything about motorcycle rental..."):
 
-    # Simpan dan tampilkan pesan pengguna
+    # Save and display user message
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Generate jawaban dari RAG chain
+    # Generate answer from RAG chain
     with st.chat_message("assistant"):
-        with st.spinner("Mencari informasi di katalog..."):
+        with st.spinner("Searching catalog..."):
             result = chain.invoke({"query": user_input})
             answer = result["result"]
             source_docs = result["source_documents"]
 
         st.markdown(answer)
 
-        # Tampilkan referensi dokumen sumber (bisa di-collapse)
-        with st.expander("Lihat referensi dari katalog"):
-            for i, doc in enumerate(source_docs, 1):
-                st.markdown(f"**Referensi {i}:**")
-                st.text(doc.page_content[:300] + "...")
-                st.divider()
-
-    # Simpan jawaban ke riwayat
+    # Save answer to history
     st.session_state.messages.append({"role": "assistant", "content": answer})
 
 
 # ── Sidebar ────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.header("📋 Tentang Aplikasi")
+    st.header("📋 About")
     st.markdown(
-        "Aplikasi ini menggunakan teknologi **RAG** "
-        "_(Retrieval-Augmented Generation)_ untuk menjawab "
-        "pertanyaan berdasarkan katalog produk resmi.\n\n"
-        "Jawaban didasarkan **hanya** pada dokumen katalog, "
-        "bukan pengetahuan umum AI."
+        "This application uses **RAG** "
+        "_(Retrieval-Augmented Generation)_ technology to answer "
+        "questions based on the official motorcycle rental catalog.\n\n"
+        "Answers are based **only** on the catalog document, "
+        "not the AI's general knowledge."
     )
 
     st.divider()
 
-    st.subheader("📱 Produk Tersedia")
+    st.subheader("🏍️ Motorcycle Categories")
     st.markdown(
-        "1. Xiaomi Redmi Note 13 Pro+ 5G\n"
-        "2. Samsung Galaxy A55 5G\n"
-        "3. OPPO Reno 12 Pro\n"
-        "4. Samsung Galaxy S24\n"
-        "5. Apple iPhone 15\n"
-        "6. Apple iPhone 15 Pro Max"
+        "**Economy Matic:**\n"
+        "- Honda Beat (Rp 75,000/day)\n"
+        "- Honda Scoopy (Rp 75,000/day)\n"
+        "- Yamaha Mio (Rp 75,000/day)\n"
+        "- Yamaha Fazzio (Rp 80,000/day)\n\n"
+        "**Premium Matic:**\n"
+        "- Honda PCX 160 (Rp 125,000/day)\n"
+        "- Yamaha NMAX (Rp 125,000/day)\n"
+        "- Yamaha Aerox (Rp 130,000/day)\n\n"
+        "**Economy Manual:**\n"
+        "- Honda Supra X (Rp 60,000/day)\n"
+        "- Honda Revo (Rp 60,000/day)\n"
+        "- Yamaha Jupiter (Rp 65,000/day)\n\n"
+        "**Premium Trail:**\n"
+        "- Honda CRF 150L (Rp 150,000/day)\n"
+        "- Kawasaki KLX 150 (Rp 150,000/day)\n\n"
+        "**Electric:**\n"
+        "- Gesits (Rp 85,000/day)\n"
+        "- Volta 401 (Rp 100,000/day)"
     )
 
     st.divider()
 
-    st.subheader("⚙️ Arsitektur Sistem")
+    st.subheader("⚙️ System Architecture")
     st.markdown(
         "```\n"
-        "Katalog Produk (TXT)\n"
+        "Rental Catalog (MD)\n"
         "       ↓\n"
         "  Document Loader\n"
         "       ↓\n"
@@ -141,12 +135,12 @@ with st.sidebar:
         "       ↓\n"
         " Groq LLM (Llama 3.3)\n"
         "       ↓\n"
-        "  Jawaban Final\n"
+        "  Final Answer\n"
         "```"
     )
 
     st.divider()
 
-    if st.button("🔄 Reset Percakapan", use_container_width=True):
+    if st.button("🔄 Reset Conversation", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
