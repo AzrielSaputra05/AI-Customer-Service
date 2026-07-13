@@ -3,13 +3,11 @@ from rag_pipeline import build_rag_pipeline
 
 # ── Page Configuration ─────────────────────────────────────────────────
 st.set_page_config(
-    page_title="RideEasy Customer Support",
-    page_icon="🏍️",
-    layout="centered"
+    page_title="RideEasy Customer Support",page_icon="🏍️",layout="centered"
 )
 
 # ── Header ─────────────────────────────────────────────────────────────
-st.title("🏍️ RideEasy Customer Support")
+st.title("RideEasy Customer Support")
 st.caption(
     "AI Assistant for sales & marketing team — "
     "pricing info, rental requirements, motorcycle recommendations, and services"

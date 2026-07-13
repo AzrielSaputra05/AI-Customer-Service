@@ -1,51 +1,51 @@
-# 🏍️ MOTORCYCLE RENTAL CATALOG "RideEasy"
-### Source: Product Knowledge Team - Sales & Marketing Division
-### Updated: June 2026
+ 🏍️ MOTORCYCLE RENTAL CATALOG "RideEasy"
+ Source: Product Knowledge Team - Sales & Marketing Division
+ Updated: June 2026
 
 ---
 
-## 📋 INTENT MAPPING (for retrieval system)
+INTENT MAPPING (for retrieval system)
 
-- **INT-001 (price):** What is the rental price? Any discounts?
-- **INT-002 (requirements):** What are the rental requirements? Can I rent without a license?
-- **INT-003 (unit):** What motorcycles are available? Is NMAX available?
-- **INT-004 (service):** Do you provide pick-up/delivery? Operating hours?
-- **INT-005 (penalty):** How much is the late return penalty? Are scratches charged?
-- **INT-006 (recommendation):** Which motorcycle should I choose? What's good for touring?
+- INT-001 (price): What is the rental price? Any discounts?
+- INT-002 (requirements): What are the rental requirements? Can I rent without a license?
+- INT-003 (unit): What motorcycles are available? Is NMAX available?
+- INT-004 (service): Do you provide pick-up/delivery? Operating hours?
+- INT-005 (penalty): How much is the late return penalty? Are scratches charged?
+- INT-006 (recommendation): Which motorcycle should I choose? What's good for touring?
 
 ---
 
-## 🏍️ MOTORCYCLE UNIT LIST
+MOTORCYCLE UNIT LIST
 
-### CATEGORY A: ECONOMY MATIC
+CATEGORY A: ECONOMY MATIC
 - Honda Beat (110cc, 60 km/L, Rp 75,000/day)
 - Honda Scoopy (110cc, 59 km/L, Rp 75,000/day)
 - Yamaha Mio (125cc, 55 km/L, Rp 75,000/day)
 - Yamaha Fazzio (125cc, 58 km/L, Rp 80,000/day)
 
-### CATEGORY B: PREMIUM MATIC
+CATEGORY B: PREMIUM MATIC
 - Honda PCX 160 (160cc, 40 km/L, Rp 125,000/day)
 - Yamaha NMAX (155cc, 42 km/L, Rp 125,000/day)
 - Yamaha Aerox (155cc, 38 km/L, Rp 130,000/day)
 
-### CATEGORY C: ECONOMY MANUAL
+CATEGORY C: ECONOMY MANUAL
 - Honda Supra X 125 (125cc, 65 km/L, Rp 60,000/day)
 - Honda Revo (110cc, 70 km/L, Rp 60,000/day)
 - Yamaha Jupiter (115cc, 60 km/L, Rp 65,000/day)
 
-### CATEGORY D: PREMIUM TRAIL
+CATEGORY D: PREMIUM TRAIL
 - Honda CRF 150L (150cc, 35 km/L, Rp 150,000/day)
 - Kawasaki KLX 150 (150cc, 33 km/L, Rp 150,000/day)
 
-### CATEGORY E: ELECTRIC
+CATEGORY E: ELECTRIC
 - Gesits (Range 60 km, Rp 85,000/day)
 - Volta 401 (Range 70 km, Rp 100,000/day)
 
 ---
 
-## 💰 PRICE LIST
+PRICE LIST
 
-### Daily Rental Price
+Daily Rental Price
 - Economy Manual: Rp 60,000 - Rp 65,000/day
 - Economy Matic: Rp 75,000 - Rp 80,000/day
 - Economy Electric: Rp 85,000/day
@@ -53,7 +53,7 @@
 - Premium Matic: Rp 125,000 - Rp 130,000/day
 - Premium Trail: Rp 150,000/day
 
-### Weekly Rental Price (7 days)
+Weekly Rental Price (7 days)
 - Economy Manual: Rp 378,000 - Rp 409,500
 - Economy Matic: Rp 472,500 - Rp 504,000
 - Economy Electric: Rp 535,500
@@ -61,7 +61,7 @@
 - Premium Matic: Rp 787,500 - Rp 819,000
 - Premium Trail: Rp 945,000
 
-### Monthly Rental Price (30 days)
+Monthly Rental Price (30 days)
 - Economy Manual: Rp 1,440,000 - Rp 1,560,000
 - Economy Matic: Rp 1,800,000 - Rp 1,920,000
 - Economy Electric: Rp 2,040,000
@@ -69,7 +69,7 @@
 - Premium Matic: Rp 3,000,000 - Rp 3,120,000
 - Premium Trail: Rp 3,600,000
 
-### Discounts & Promotions
+Discounts & Promotions
 - 7-day rental: 10% discount
 - 30-day rental: 20% discount
 - Student/College Student: 5% discount (show student ID card)
@@ -77,16 +77,16 @@
 - Repeat customer (3rd transaction): 10% discount
 - First time customer: 5% discount
 
-### Additional Costs
+Additional Costs
 - Full face helmet: Rp 20,000/day
 - Phone holder: Rp 10,000/day
 - Full tank service: Rp 35,000 (full tank, return empty)
 
 ---
 
-## 📄 RENTAL REQUIREMENTS
+RENTAL REQUIREMENTS
 
-### Mandatory Requirements
+Mandatory Requirements
 - Original ID card (KTP) (must be valid, no photocopies accepted)
 - Original driver's license (SIM C) (must be valid, no photocopies accepted)
 - Deposit Rp 500,000 (cash/transfer, 100% refundable)
@@ -96,38 +96,38 @@
 - Selfie photo with the motorcycle during handover
 - Renter MUST be present in person (cannot be represented)
 
-### Additional Requirements (Conditional)
+Additional Requirements (Conditional)
 - Original student ID card (to claim 5% discount)
 
 ---
 
-## 🚗 SERVICE LIST
+SERVICE LIST
 
-### Pick-up & Delivery
+Pick-up & Delivery
 - City pick-up/delivery (10 km radius): FREE (min 2-day rental)
 - Airport pick-up/delivery: Rp 50,000 (min 1-day rental, must book 2 days in advance)
 
-### Operating Hours
+Operating Hours
 - Monday - Friday: 07:00 - 21:00 WIB
 - Saturday - Sunday: 06:00 - 22:00 WIB
 - National holidays: 07:00 - 20:00 WIB
 
-### Booking Methods
+Booking Methods
 - WhatsApp: 0812-3456-**** (response < 5 minutes)
 - Phone: (021) 1234-**** (response < 2 minutes)
 
 ---
 
-## ⚠️ PENALTY LIST
+PENALTY LIST
 
-### Late Return Penalty
+Late Return Penalty
 - Late 1 - 2 hours: FREE (grace period)
 - Late 2 - 6 hours: Penalty of half the daily rental price
 - Late more than 6 hours: Penalty of 1 full day rental price
 - Late more than 24 hours: Penalty of 2x the daily rental price
 - Late more than 48 hours without confirmation: Penalty of 3x the daily rental price and deposit forfeited
 
-### Late Return Penalty Calculation Examples
+Late Return Penalty Calculation Examples
 - Honda Beat (Rp 75,000/day)
   - Late 2-6 hours: Rp 37,500
   - Late >6 hours: Rp 75,000
@@ -144,7 +144,7 @@
   - Late >24 hours: Rp 300,000
   - Late >48 hours: Rp 450,000
 
-### Damage Penalty
+Damage Penalty
 - Light scratches: Rp 50,000 - Rp 100,000 per panel
 - Medium scratches: Rp 100,000 - Rp 250,000 per panel
 - Broken mirror: Rp 75,000 - Rp 150,000
@@ -155,49 +155,49 @@
 - Minor engine damage: Rp 500,000 - Rp 1,500,000
 - Major engine damage: Maximum Rp 2,000,000
 
-### Lost Items Penalty
+Lost Items Penalty
 - Motorcycle key: Rp 100,000
 - Vehicle registration (STNK): Rp 300,000
 - License plate (1 piece): Rp 150,000
 - License plate (1 pair): Rp 250,000
 - Standard helmet: Rp 100,000
 
-### Special Penalties
+Special Penalties
 - Lost motorcycle (stolen): Maximum Rp 2,000,000 (must file police report within 1x24 hours)
 - Total loss accident: Maximum Rp 2,000,000 (must file police report)
 - Motorcycle confiscated by authorities: Full responsibility of the renter
 
 ---
 
-## 📊 QUICK COMPARISON
+UICK COMPARISON
 
-### Comparison by Category
+Comparison by Category
 
-**Economy Manual**
+Economy Manual
 - Price Range: Rp 60,000 - Rp 65,000/day
 - CC Range: 110-125cc
 - Fuel Efficiency Range: 60-70 km/L
 - Target Customer: Most budget-friendly
 
-**Economy Matic**
+Economy Matic
 - Price Range: Rp 75,000 - Rp 80,000/day
 - CC Range: 110-125cc
 - Fuel Efficiency Range: 55-60 km/L
 - Target Customer: Daily use, easy, fuel-efficient
 
-**Premium Matic**
+Premium Matic
 - Price Range: Rp 125,000 - Rp 130,000/day
 - CC Range: 155-160cc
 - Fuel Efficiency Range: 38-42 km/L
 - Target Customer: Comfortable, touring, business
 
-**Premium Trail**
+Premium Trail
 - Price Range: Rp 150,000/day
 - CC Range: 150cc
 - Fuel Efficiency Range: 33-35 km/L
 - Target Customer: Adventure, off-road
 
-**Electric**
+Electric
 - Price Range: Rp 85,000 - Rp 100,000/day
 - CC Range: -
 - Range: 60-70 km
@@ -205,130 +205,130 @@
 
 ---
 
-## 🎯 RECOMMENDATION GUIDE BY NEEDS
+RECOMMENDATION GUIDE BY NEEDS
 
-### By Budget
+By Budget
 
-**Budget below Rp 70,000/day**
+Budget below Rp 70,000/day
 - Main Recommendation: Honda Supra X / Honda Revo
 - Alternative: Yamaha Jupiter
 
-**Budget Rp 70,000 - Rp 85,000/day**
+Budget Rp 70,000 - Rp 85,000/day
 - Main Recommendation: Honda Beat / Yamaha Mio
 - Alternative: Yamaha Fazzio / Gesits
 
-**Budget Rp 85,000 - Rp 130,000/day**
+Budget Rp 85,000 - Rp 130,000/day
 - Main Recommendation: Honda PCX 160 / Yamaha NMAX
 - Alternative: Yamaha Aerox / Volta 401
 
-**Budget above Rp 130,000/day**
+Budget above Rp 130,000/day
 - Main Recommendation: Yamaha Aerox
 - Alternative: Honda CRF 150L / Kawasaki KLX 150
 
-### By Customer Profile
+By Customer Profile
 
-**Student/College Student**
+Student/College Student
 - Recommendation: Honda Beat
 - Reason: Fuel-efficient, affordable, easy to ride
 
-**Office Worker**
+Office Worker
 - Recommendation: Honda PCX 160
 - Reason: Comfortable, stylish, classy
 
-**Domestic Tourist**
+Domestic Tourist
 - Recommendation: Yamaha NMAX
 - Reason: Comfortable for touring, fuel-efficient
 
-**Foreign Tourist**
+Foreign Tourist
 - Recommendation: Honda CRF 150L
 - Reason: Big bike, suitable for adventure
 
-**Couple**
+Couple
 - Recommendation: Yamaha Fazzio
 - Reason: Stylish, spacious storage, fuel-efficient
 
-**Group Tour (3+ motorcycles)**
+Group Tour (3+ motorcycles)
 - Recommendation: Honda Beat
 - Reason: Affordable + 15% group discount
 
-**Eco-Friendly**
+Eco-Friendly
 - Recommendation: Gesits
 - Reason: Environmentally friendly, zero emissions
 
-**Adventure/Off-road**
+Adventure/Off-road
 - Recommendation: Kawasaki KLX 150
 - Reason: Tough, agile on heavy terrain
 
-### By Specific Needs
+By Specific Needs
 
-**Most Fuel Efficient**
+Most Fuel Efficient
 - Recommendation: Honda Revo (70 km/L)
 - Reason: Lowest fuel consumption
 
-**Cheapest**
+Cheapest
 - Recommendation: Honda Supra X / Honda Revo (Rp 60,000)
 - Reason: Lowest rental price
 
-**Most Comfortable**
+Most Comfortable
 - Recommendation: Honda PCX 160
 - Reason: Soft suspension, wide seat
 
-**Most Stylish**
+Most Stylish
 - Recommendation: Yamaha Fazzio
 - Reason: Retro-modern design
 
-**Most Powerful**
+Most Powerful
 - Recommendation: Yamaha Aerox
 - Reason: Sporty acceleration
 
-**Most Eco-Friendly**
+Most Eco-Friendly
 - Recommendation: Gesits
 - Reason: Zero emissions, silent
 
-**Largest Storage**
+Largest Storage
 - Recommendation: Honda PCX 160 (30L)
 - Reason: Fits full face helmet + raincoat
 
-**Easiest to Ride**
+Easiest to Ride
 - Recommendation: Honda Beat
 - Reason: Lightweight, agile, automatic
 
-### By Rental Duration
+By Rental Duration
 
-**1-3 days rental**
+1-3 days rental
 - Recommendation: Economy Matic (Beat/Mio)
 - Tips: Most practical and affordable
 
-**4-7 days rental**
+4-7 days rental
 - Recommendation: Premium Matic (NMAX/PCX)
 - Tips: More comfortable for longer use
 
-**1 week - 1 month rental**
+1 week - 1 month rental
 - Recommendation: Economy Manual (Supra/Revo)
 - Tips: Most economical for long term
 
-**More than 1 month rental**
+More than 1 month rental
 - Recommendation: Economy Manual + 20% discount
 - Tips: Lowest price + maximum discount
 
-### By Terrain/Road
+By Terrain/Road
 
-**Inner city (traffic)**
+Inner city (traffic)
 - Recommendation: Honda Beat / Yamaha Mio
 - Reason: Lightweight, agile, fuel-efficient
 
-**Highway/outer ring road**
+Highway/outer ring road
 - Recommendation: Honda PCX 160 / Yamaha NMAX
 - Reason: Stable at high speed
 
-**Hilly areas**
+Hilly areas
 - Recommendation: Honda Supra X / Honda CRF 150L
 - Reason: High torque, strong on inclines
 
-**Light off-road**
+Light off-road
 - Recommendation: Honda CRF 150L
 - Reason: Trail suspension, dual-purpose tires
 
-**Heavy off-road**
+Heavy off-road
 - Recommendation: Kawasaki KLX 150
 - Reason: Lightweight, high ground clearance
